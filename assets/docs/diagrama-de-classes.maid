@@ -1,0 +1,39 @@
+classDiagram
+    class Ticket {
+        +id: string
+        +title: string
+        +description: string
+        +status: string
+    }
+    class Queue {
+        +id: string
+        +tickets: Ticket[]
+        +locked: boolean
+        +lock()
+        +unlock()
+    }
+    class ITicketRepository {
+        <>
+        +findById(id: string): Promise
+        +save(ticket: Ticket): Promise
+        +findAll(): Promise
+    }
+    class IQueueRepository {
+        <>
+        +findById(id: string): Promise
+        +save(queue: Queue): Promise
+        +findAll(): Promise
+    }
+    class StartSessionUseCase {
+        +execute(queueId: string, userId: string): Promise
+    }
+    class EndSessionUseCase {
+        +execute(queueId: string): Promise
+    }
+    class ProcessTicketUseCase {
+        +execute(ticketId: string, status: string): Promise
+    }
+    StartSessionUseCase --> IQueueRepository
+    EndSessionUseCase --> IQueueRepository
+    ProcessTicketUseCase --> ITicketRepository
+    Queue --> Ticket

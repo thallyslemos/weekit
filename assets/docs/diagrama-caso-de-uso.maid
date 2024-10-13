@@ -1,0 +1,9 @@
+graph TD
+    Agent((Agent))
+    Agent -->|Start Session| StartSession[Start Session]
+    Agent -->|End Session| EndSession[End Session]
+    Agent -->|Process Ticket| ProcessTicket[Process Ticket]
+    StartSession -->|Locks| Queue((Queue))
+    EndSession -->|Unlocks| Queue
+    Queue -->|Contains| Ticket((Ticket))
+    ProcessTicket -->|Updates| Ticket
